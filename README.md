@@ -13,7 +13,14 @@
                                     /____/
 ```
 
-butterfly  nginx 部署
+<!-- vim-markdown-toc GFM -->
+
+* [1 Butterfly nginx 物理部署](#1-butterfly-nginx-物理部署)
+    * [1.1 操作](#11-操作)
+* [2 Butterfly nginx docker 部署](#2-butterfly-nginx-docker-部署)
+
+<!-- vim-markdown-toc -->
+## 1 Butterfly nginx 物理部署
 
 ```
 webserver
@@ -36,7 +43,7 @@ webserver
 └── __stdout
 ```
 
-## 操作
+### 1.1 操作
 
 > * (1) [编译 nginx](https://github.com/meetbill/op_practice_book/blob/master/doc/web/nginx.md)
 > * (2) 将编译后的 nginx 放到 webserver/sbin 目录
@@ -62,3 +69,14 @@ butterfly
 
 > * (4) 配置：配置 webserver/conf/nginx.conf 修改端口
 > * (5) 启动：cd webserver/ & bash run.sh start
+
+## 2 Butterfly nginx docker 部署 
+
+> 目录
+```
+docker_nginx
+├── Dockerfile.web
+├── README.md
+└── conf
+    └── nginx.conf
+```
