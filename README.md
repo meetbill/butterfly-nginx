@@ -17,6 +17,7 @@
 
 * [1 Butterfly nginx 物理部署](#1-butterfly-nginx-物理部署)
     * [1.1 操作](#11-操作)
+    * [1.2 接口认证](#12-接口认证)
 * [2 Butterfly nginx docker 部署](#2-butterfly-nginx-docker-部署)
 
 <!-- vim-markdown-toc -->
@@ -69,6 +70,32 @@ butterfly
 
 > * (4) 配置：配置 webserver/conf/nginx.conf 修改端口
 > * (5) 启动：cd webserver/ & bash run.sh start
+
+### 1.2 接口认证
+
+> 接口认证流程图
+```
+NGINX ---- auth request ----> /auth/verification
+                                  |         |
+  |     <---      200  <------  SUCCESS    FAILED -----> 401  -----> /butterfly_401
+  |
+  ----> underlying request ----> BACKEND SERVER
+```
+[wiki](https://github.com/meetbill/butterfly-nginx/wiki/nginx_auth_request)
+
+默认的配置中增加了 /auth/verification 认证配置
+
+接口认证通过后会向后端添加 `X-Username` header
+
+> 如何去掉接口认证
+```
+去掉 location / 中的如下几行即可:
+            auth_request        /auth/verification;
+            auth_request_set    $butterfly_location $upstream_http_location;
+            auth_request_set    $butterfly_username $upstream_http_username;
+            error_page 401    = /butterfly_401;
+            proxy_set_header  X-Username        $butterfly_username;
+```
 
 ## 2 Butterfly nginx docker 部署 
 
